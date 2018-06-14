@@ -1,7 +1,7 @@
 # ProgLinealApp
 Una aplicación genial para Programación Lineal
 
-	Tenemos 2 partes el módulo de cálculo "calculus.py" y el punto de entrada al modulo "entryPoint.py"
+	Tenemos 2 partes el módulo de cálculo "testing.py" y el punto de entrada al modulo "entryPoint.py"
 	Desde la UI nos pasaron los datos coeficientes y demas, el punto de entrada los recibe y le pasa los parametros al modulo de cálculo.
 	En entryPoint hay una funcion resolver(obj,restricciones,tipoProblema) 
 	donde: obj son los coeficientes de la funcion objetivo, restricciones (del problema), tipoProblema (max o min)
