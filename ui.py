@@ -19,6 +19,7 @@ def ecuacion(): # X = X1  Y = X2
 #los campos son leidos en forma de stringvar
 	
 	#Coeficientes Funcion Obejtivo
+	
 	R1A1 = int
 	R1B1 = int
 	R1C1 = int
@@ -67,53 +68,48 @@ def ecuacion(): # X = X1  Y = X2
 		R3S = 1
 	else:
 		R3S = -1
-		
+	
 	#estos son los capturas en input
 	FunObj = [FOX1,FOX2]
 	Rest = [[R1A1,R1B1,R1C1,R1S],[R2A2,R2B2,R2C2,R2S], [R3A3,R3B3,R3C3,R3S]]
 	
 	#estos son los valores constantes
-	coeficienteObjetivo = [3,2]
-	restricciones = [[2,1,18,-1],[2,3,42,-1],[3,1,24,-1]]	
+	#coeficienteObjetivo = [3,2]
+	#restricciones = [[2,1,18,-1],[2,3,42,-1],[3,1,24,-1]]	
 	
 	#problema = resolver(coeficienteObjetivo,restricciones,LpMaximize)
-	problema = resolver(FunObj,Rest,Optimo)
+	problema = resolver(FunObj,Rest,LpMaximize)
 	
 	
-	problema.solve()
 	
 	
-	valores = []
+	
+	
 	#imprimimos por consola los valores de la funcion objetivo y de las variables
-	print("objective=", value(problema.objective))
-
+	'''
+	print("objective=", problema[0])
+	print("x1=", problema[1])
+	print("x2=", problema[2])
+	
 	for v in problema.variables():
 		valores.append([(v.name),(v.varValue)])
 		print([v.name,v.varValue])
-	
-	
-	# el problema es cuando quiero crear una nueva ventana y mostrar los resultados en una nueva ventana
-	# cuando calculo y saco los resultados con  coeficienteObjetivo y restricciones (linea 75 y 76) puedo mostrar re bien
-	# pero cuando uso los valores de las inputs no funciona, todo vale 0
-	# ya probé comparar la input con los arreglos constantes y me da que son iguales
-	#calculo que es un problema de alcance o de esa naturaleza
-	# probé guardar en variable y pasarlo a otra funcion pero tampoco funciona
-
-	# acá está ventana
 	'''
+	
+	
+	# acá está ventana
+	
 	root = Tk()
 	frame = Frame(root)
 	frame.pack()
 	bottomframe = Frame(root)
 	bottomframe.pack( side = BOTTOM )
 			#mostramos el resultado	
+	Label(root, text = "El tipo resultado es = " + str(problema[3])).pack()
+	Label(root, text = "El Z optimo es = " + str(problema[0])).pack()
+	Label(root, text = "x1" + "= " + str(problema[1])).pack()
+	Label(root, text = "x1" + "= " + str(problema[2])).pack()
 	
-	Label(root, text = "El Z optimo es = " + (value(problema.objective))).pack()
-	Label(root, text = str(valores[0][0]) + " = " + str(valores[0][1]) ).pack()
-	Label(root, text = str(valores[1][0]) + " = " + str(valores[1][1]) ).pack()
-	#Label(root, text = Rest ).pack()
-	#Label(root, text = FunObj ).pack()
-	'''
 
 
 
