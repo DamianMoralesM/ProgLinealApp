@@ -8,7 +8,7 @@
 from tkinter import *    # Carga módulo tk (widgets estándar)
 from tkinter import ttk  # Carga ttk (para widgets nuevos 8.5+)
 from pulp import * # Carga Pulp 
-from testing import *
+from calculo import *
 from tkinter import messagebox
 
 
