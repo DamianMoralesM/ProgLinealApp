@@ -10,7 +10,7 @@ def resolver(obj,k,tipoProblema):
     # variables
 
     x1=LpVariable("x1",0,None,LpInteger)
-    x2=LpVariable("x2",0)
+    x2=LpVariable("x2",0,None,LpInteger)
 
 
     #objetive
