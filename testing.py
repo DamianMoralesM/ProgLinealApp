@@ -35,7 +35,16 @@ def resolver(obj,k,tipoProblema):
     prob.writeLP("Calculus.lp")
 
     # Solve the problem using the default solver
-    return prob
+    prob.solve()
+    result = []
+   
+    result.append(prob.objective.value())
+    for v in prob.variables():
+         result.append(v.varValue)
+    
+    result.append(LpStatus[prob.status])
+
+    return result
 
 
   
