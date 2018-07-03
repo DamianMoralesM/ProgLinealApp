@@ -32,10 +32,11 @@ def resolver(obj,k,tipoProblema):
 
 
     # Write the problem as an LP file
-    prob.writeLP("Calculus.lp")
+    # prob.writeLP("Calculus.lp")
 
     # Solve the problem using the default solver
     prob.solve()
+    
     result = []
    
     result.append(prob.objective.value())
