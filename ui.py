@@ -21,18 +21,18 @@ def ecuacion(): # X = X1  Y = X2
 	
 	#Coeficientes Funcion Obejtivo
 	
-	R1A1 = int
-	R1B1 = int
-	R1C1 = int
-	R2A2 = int
-	R2B2 = int
-	R2C2 = int
-	R3A3 = int
-	R3B3 = int
-	R3C3 = int
-	R1S = int
-	R2S = int
-	R3S = int
+	R1A1 = float
+	R1B1 = float
+	R1C1 = float
+	R2A2 = float
+	R2B2 = float
+	R2C2 = float
+	R3A3 = float
+	R3B3 = float
+	R3C3 = float
+	R1S = float
+	R2S = float
+	R3S = float
 	
 
 	if (OPT == 'MAX'):
@@ -40,35 +40,42 @@ def ecuacion(): # X = X1  Y = X2
 	else:
 		Optimo = LpMinimize
 
-	FOX1 = int(OX1.get()) 
-	FOX2 = int(OX2.get())
+	FOX1 = float(OX1.get()) 
+	FOX2 = float(OX2.get())
 
 	#Coeficientes Restriccion 1
-	R1A1 = int(R1X1.get())
-	R1B1 = int(R1X2.get())
-	R1C1 = int(R1C.get())
-	if (R1Signo.get() == '>='):
-		R1S = 1
+	R1A1 = float(R1X1.get())
+	R1B1 = float(R1X2.get())
+	R1C1 = float(R1C.get())
+	if  (R3Signo.get() =='>='):
+  		 R1S = -1
+	elif (R3Signo.get() =='<='):
+  		  R1S = 1 
 	else:
-		R1S = -1
+		R1S = 0
 
 	#Coeficientes Restriccion 2
-	R2A2 = int(R2X1.get())
-	R2B2 = int(R2X2.get())
-	R2C2 = int(R2C.get())
-	if (R2Signo.get() =='>='):
-		R2S = 1
+	R2A2 = float(R2X1.get())
+	R2B2 = float(R2X2.get())
+	R2C2 = float(R2C.get())
+	if  (R3Signo.get() =='>='):
+  		 R2S = -1
+	elif (R3Signo.get() =='<='):
+  		  R2S = 1 
 	else:
-		R2S = -1
+		R2S = 0
 
 	#Coeficientes Restriccion 2
-	R3A3 = int(R3X1.get())
-	R3B3 = int(R3X2.get())
-	R3C3 = int(R3C.get())
-	if (R3Signo.get() =='>='):
-		R3S = 1
+	R3A3 = float(R3X1.get())
+	R3B3 = float(R3X2.get())
+	R3C3 = float(R3C.get())
+		
+	if  (R3Signo.get() =='>='):
+  		 R3S = -1
+	elif (R3Signo.get() =='<='):
+  		  R3S = 1 
 	else:
-		R3S = -1
+		R3S = 0
 	
 	#estos son los capturas en input
 	FunObj = [FOX1,FOX2]
@@ -79,7 +86,7 @@ def ecuacion(): # X = X1  Y = X2
 	#restricciones = [[2,1,18,-1],[2,3,42,-1],[3,1,24,-1]]	
 	
 	#problema = resolver(coeficienteObjetivo,restricciones,LpMaximize)
-	problema = resolver(FunObj,Rest,LpMaximize)
+	problema = resolver(FunObj,Rest,Optimo)
 	
 	
 	
@@ -111,7 +118,10 @@ def ecuacion(): # X = X1  Y = X2
 	Label(root, text = "El Z optimo es = " + str(problema[0])).pack()
 	Label(root, text = "x1" + "= " + str(problema[1])).pack()
 	Label(root, text = "x1" + "= " + str(problema[2])).pack()
+
+	# Gráfica del problema
 	graficar(Rest, problema)
+	
 
 
 
@@ -167,7 +177,7 @@ Entry(restriccion1, width = '5',textvariable = R1X1).pack(side = LEFT)
 Label(restriccion1, text = " X1 ").pack(side = LEFT)
 Entry(restriccion1, width = '5',textvariable = R1X2).pack(side = LEFT)
 Label(restriccion1, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion1, values = ('>=','<='), width = '5',textvariable = R1Signo).pack(side = LEFT)
+ttk.Combobox(restriccion1, values = ('>=','<=','='), width = '5',textvariable = R1Signo).pack(side = LEFT)
 Entry(restriccion1, width = '5', textvariable = R1C).pack(side = LEFT)
 
 #Restriccion2
@@ -178,7 +188,7 @@ Entry(restriccion2, width = '5',textvariable = R2X1).pack(side = LEFT)
 Label(restriccion2, text = " X1 ").pack(side = LEFT)
 Entry(restriccion2, width = '5',textvariable = R2X2).pack(side = LEFT)
 Label(restriccion2, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion2, values = ('>=','<='), width = '5', textvariable = R2Signo).pack(side = LEFT)
+ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R2Signo).pack(side = LEFT)
 Entry(restriccion2, width = '5', textvariable = R2C).pack(side = LEFT)
 
 #Restriccion3
@@ -189,7 +199,7 @@ Entry(restriccion2, width = '5',textvariable = R3X1).pack(side = LEFT)
 Label(restriccion2, text = " X1 ").pack(side = LEFT)
 Entry(restriccion2, width = '5',textvariable = R3X2).pack(side = LEFT)
 Label(restriccion2, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion2, values = ('>=','<='), width = '5', textvariable = R3Signo).pack(side = LEFT)
+ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R3Signo).pack(side = LEFT)
 Entry(restriccion2, width = '5', textvariable = R3C).pack(side = LEFT)
 
 ttk.Button(raiz, text='Salir', command=quit).pack(side=BOTTOM)
