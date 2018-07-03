@@ -10,6 +10,7 @@ from tkinter import ttk  # Carga ttk (para widgets nuevos 8.5+)
 from pulp import * # Carga Pulp 
 from calculo import *
 from tkinter import messagebox
+from grafico import *
 
 
 
@@ -85,6 +86,7 @@ def ecuacion(): # X = X1  Y = X2
 	
 	
 	
+	
 	#imprimimos por consola los valores de la funcion objetivo y de las variables
 	'''
 	print("objective=", problema[0])
@@ -109,7 +111,7 @@ def ecuacion(): # X = X1  Y = X2
 	Label(root, text = "El Z optimo es = " + str(problema[0])).pack()
 	Label(root, text = "x1" + "= " + str(problema[1])).pack()
 	Label(root, text = "x1" + "= " + str(problema[2])).pack()
-	
+	graficar(Rest)
 
 
 
