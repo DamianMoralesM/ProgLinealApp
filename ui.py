@@ -111,7 +111,7 @@ def ecuacion(): # X = X1  Y = X2
 	Label(root, text = "El Z optimo es = " + str(problema[0])).pack()
 	Label(root, text = "x1" + "= " + str(problema[1])).pack()
 	Label(root, text = "x1" + "= " + str(problema[2])).pack()
-	graficar(Rest)
+	graficar(Rest, problema)
 
 
 

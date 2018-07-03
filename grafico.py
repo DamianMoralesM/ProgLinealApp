@@ -4,12 +4,23 @@ import numpy as np
 def f(x, c1, c2, b):
     return (b - c1*x)/c2
 
-def graficar(k):
+def graficar(k, solucion):
+    fig, (ax, tabax) = pyplot.subplots(nrows=2)
     x = np.arange(0.0, 2.0, 0.01)
     y1 = f(x, k[0][0], k[0][1], k[0][2])
-    pyplot.plot(x, y1)
+    ax.plot(x, y1)
     y2 = f(x, k[1][0], k[1][1], k[1][2])
-    pyplot.plot(x, y2)
+    ax.plot(x, y2)
     y3 = f(x, k[2][0], k[2][1], k[2][2])
-    pyplot.plot(x, y3)
+    ax.plot(x, y3)
+    columns = ("x1", "x2", "x3", "x4", "x5", "z")
+    rows = ["A", "B", "C"]
+    data = [
+        [11, 12, 13, 14, 15, "z1"],
+        [21, 22, 23, 24, 25, "z2"],
+        [31, 32, 33, 34, 35, "z3"]
+    ]
+    tabax.axis("off")
+    tabax.table(cellText=data, rowLabels=rows, colLabels=columns, loc="center") #, bbox=[0.0,-0.5,1,0.3])
+    pyplot.tight_layout()
     pyplot.show()
