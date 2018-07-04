@@ -121,7 +121,7 @@ def ecuacion(): # X = X1  Y = X2
 	Label(root, text = "x1" + "= " + str(problema[2])).pack()
 
 	# Gráfica del problema
-	graficar(Rest, problema, N)
+	graficar(FunObj, Rest, problema, N)
 
 def CantResUpdate(event):
 	sel = int(CantRes.get())
