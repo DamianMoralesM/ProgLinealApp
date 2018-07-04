@@ -77,7 +77,7 @@ def puntosTabla(obj, k, n):
 def graficar(obj, k, solucion, n):
     fig, (ax, tabax) = pyplot.subplots(nrows=2)
     # Definiciones para la gráfica
-    x = np.arange(0.0, solucion[1], 0.01)
+    x = np.arange(solucion[1] - 5, solucion[1] + 5, 0.01)
     ax.set_ylim(0)
     ax.axis('equal')
     i = 0
