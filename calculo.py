@@ -3,6 +3,7 @@
 from pulp import *
 
 
+
 def resolver(obj,k,tipoProblema):
     # A new LP problem
     prob = LpProblem("yourProblem", tipoProblema)
@@ -34,9 +35,12 @@ def resolver(obj,k,tipoProblema):
     # Write the problem as an LP file
     # prob.writeLP("Calculus.lp")
 
+
     # Solve the problem using the default solver
     prob.solve()
     
+	         
+
     result = []
    
     result.append(prob.objective.value())
@@ -47,5 +51,3 @@ def resolver(obj,k,tipoProblema):
 
     return result
 
-
-  
