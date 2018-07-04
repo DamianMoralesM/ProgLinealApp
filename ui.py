@@ -43,14 +43,14 @@ def ecuacion(): # X = X1  Y = X2
 
 	# Cantidad de restricciones
 	N = int(CantRes.get())
-	
+
 	#Coeficientes Restriccion 1
 	R1A1 = float(R1X1.get())
 	R1B1 = float(R1X2.get())
 	R1C1 = float(R1C.get())
-	if  (R3Signo.get() =='>='):
+	if  (R1Signo.get() =='>='):
   		 R1S = 1
-	elif (R3Signo.get() =='<='):
+	elif (R1Signo.get() =='<='):
   		  R1S = -1 
 	else:
 		R1S = 0
@@ -60,9 +60,9 @@ def ecuacion(): # X = X1  Y = X2
 		R2A2 = float(R2X1.get())
 		R2B2 = float(R2X2.get())
 		R2C2 = float(R2C.get())
-		if  (R3Signo.get() =='>='):
+		if  (R2Signo.get() =='>='):
 			R2S = 1
-		elif (R3Signo.get() =='<='):
+		elif (R2Signo.get() =='<='):
 			R2S = -1 
 		else:
 			R2S = 0
@@ -71,8 +71,7 @@ def ecuacion(): # X = X1  Y = X2
 	if N == 3:
 		R3A3 = float(R3X1.get())
 		R3B3 = float(R3X2.get())
-		R3C3 = float(R3C.get())
-			
+		R3C3 = float(R3C.get())		
 		if  (R3Signo.get() =='>='):
 			R3S = 1
 		elif (R3Signo.get() =='<='):
