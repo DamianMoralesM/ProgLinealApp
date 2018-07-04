@@ -44,9 +44,9 @@ def ecuacion(): # X = X1  Y = X2
 	R1B1 = float(R1X2.get())
 	R1C1 = float(R1C.get())
 	if  (R3Signo.get() =='>='):
-  		 R1S = -1
+  		 R1S = 1
 	elif (R3Signo.get() =='<='):
-  		  R1S = 1 
+  		  R1S = -1 
 	else:
 		R1S = 0
 
@@ -55,9 +55,9 @@ def ecuacion(): # X = X1  Y = X2
 	R2B2 = float(R2X2.get())
 	R2C2 = float(R2C.get())
 	if  (R3Signo.get() =='>='):
-  		 R2S = -1
+  		 R2S = 1
 	elif (R3Signo.get() =='<='):
-  		  R2S = 1 
+  		  R2S = -1 
 	else:
 		R2S = 0
 
