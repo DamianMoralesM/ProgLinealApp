@@ -3,10 +3,9 @@
 from pulp import *
 
 
-def resolver(obj,k,tipoProblema):
+def resolver(obj,k,tipoProblema, n):
     # A new LP problem
     prob = LpProblem("yourProblem", tipoProblema)
-    n = 1 #SE DEBERIA RECIBIR DESDE LA INTERFAZ
     # variables
 
     x1=LpVariable("x1",0,None)
@@ -40,7 +39,7 @@ def resolver(obj,k,tipoProblema):
 
     # Write the problem as an LP file
     # prob.writeLP("Calculus.lp")
-
+    print(prob)
     # Solve the problem using the default solver
     prob.solve()
     result = []

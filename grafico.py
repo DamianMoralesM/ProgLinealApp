@@ -2,10 +2,11 @@ from matplotlib import pyplot
 import numpy as np
 # x = (c-b*y)/a
 def f(x, c1, c2, b):
+    if c2 == 0:
+        return b / c1
     return (b - c1*x)/c2
 
-def graficar(k, solucion):
-    n = 2
+def graficar(k, solucion, n):
     fig, (ax, tabax) = pyplot.subplots(nrows=2)
     # Definiciones para la gráfica
     x = np.arange(0.0, 2.0, 0.01)
@@ -13,7 +14,10 @@ def graficar(k, solucion):
     i = 0
     while i < n:
         y = f(x, k[i][0], k[i][1], k[i][2])
-        ax.plot(x, y)
+        if k[i][1] == 0:
+            ax.axvline(x = y)
+        else:
+            ax.plot(x, y)
         i += 1 
 
     #y1 = f(x, k[0][0], k[0][1], k[0][2])

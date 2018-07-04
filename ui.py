@@ -30,23 +30,27 @@ def ecuacion(): # X = X1  Y = X2
 	R1S = float
 	R2S = float
 	R3S = float
+	N = int
 
-	if (OPT == 'MAX'):
+	if (OPT.get() == 'MAX'):
 		Optimo = LpMaximize
 	else:
 		Optimo = LpMinimize
-
+	
+	# Coeficientes de funcion objetivo
 	FOX1 = float(OX1.get()) 
 	FOX2 = float(OX2.get())
 
+	# Cantidad de restricciones
+	N = int(CantRes.get())
 	#Coeficientes Restriccion 1
 	R1A1 = float(R1X1.get())
 	R1B1 = float(R1X2.get())
 	R1C1 = float(R1C.get())
 	if  (R3Signo.get() =='>='):
-  		 R1S = -1
+  		 R1S = 1
 	elif (R3Signo.get() =='<='):
-  		  R1S = 1 
+  		  R1S = -1 
 	else:
 		R1S = 0
 
@@ -55,9 +59,9 @@ def ecuacion(): # X = X1  Y = X2
 	R2B2 = float(R2X2.get())
 	R2C2 = float(R2C.get())
 	if  (R3Signo.get() =='>='):
-  		 R2S = -1
+  		 R2S = 1
 	elif (R3Signo.get() =='<='):
-  		  R2S = 1 
+  		  R2S = -1 
 	else:
 		R2S = 0
 
@@ -82,7 +86,7 @@ def ecuacion(): # X = X1  Y = X2
 	#restricciones = [[2,1,18,-1],[2,3,42,-1],[3,1,24,-1]]	
 	
 	#problema = resolver(coeficienteObjetivo,restricciones,LpMaximize)
-	problema = resolver(FunObj,Rest,Optimo)	
+	problema = resolver(FunObj,Rest,Optimo, N)	
 	
 	#imprimimos por consola los valores de la funcion objetivo y de las variables
 	'''
@@ -110,12 +114,12 @@ def ecuacion(): # X = X1  Y = X2
 	Label(root, text = "x1" + "= " + str(problema[2])).pack()
 
 	# Gráfica del problema
-	graficar(Rest, problema)
+	graficar(Rest, problema, N)
 
 # Define la ventana principal de la aplicación
 
 raiz = Tk()
-raiz.geometry('400x300') # anchura x altura
+raiz.geometry('400x250') # anchura x altura
 ##raiz.configure(bg = 'beige')
 raiz.title('Programacion Lineal - Método Gráfico')
 
@@ -136,6 +140,7 @@ R3X2 = StringVar()
 R1C = StringVar()
 R2C = StringVar()
 R3C = StringVar()
+CantRes = StringVar()
 
 #Funcion Objetivo
 funcionObjetivo = Frame(raiz, width = '400', height = '100' )
@@ -147,6 +152,11 @@ Label(funcionObjetivo, text = " X1 +").pack(side = LEFT)
 Entry(funcionObjetivo, width = '5', textvariable = OX2).pack(side = LEFT)
 Label(funcionObjetivo, text = " X2 ").pack(side = LEFT)
 combo = ttk.Combobox(funcionObjetivo, values = ('MAX','MIN'), width = '5',textvariable = OPT, state = 'readonly').pack(side = LEFT)
+# Cantidad de restricciones
+cantidadRestricciones = Frame(raiz, width = '400', height = '100')
+cantidadRestricciones.pack(side = TOP)
+Label(cantidadRestricciones, text = "¿Cuántas restricciones tiene su problema?").pack(side = TOP)
+ttk.Combobox(cantidadRestricciones, values = ('1', '2', '3'), width = '5', textvariable = CantRes, state = 'readonly').pack(side = TOP)
 
 #Restriccion1
 restriccion1 = Frame(raiz, width = '400', height = '100' )
