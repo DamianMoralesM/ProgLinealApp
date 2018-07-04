@@ -18,7 +18,7 @@ def resolver(obj,k,tipoProblema, n):
     # constraints
     i = 0
     while i < n:
-        constraint = LpAffineExpression([ (x1,k[i][0]), (x2,k[0][1])])
+        constraint = LpAffineExpression([ (x1,k[i][0]), (x2,k[i][1])])
         a = LpConstraint(e=constraint, sense= k[i][3], name="c" + str(i), rhs= k[i][2]) 
         prob += a 
         i += 1
