@@ -5,21 +5,30 @@ def f(x, c1, c2, b):
     return (b - c1*x)/c2
 
 def graficar(k, solucion):
+    n = 2
     fig, (ax, tabax) = pyplot.subplots(nrows=2)
     # Definiciones para la gráfica
     x = np.arange(0.0, 2.0, 0.01)
-    y1 = f(x, k[0][0], k[0][1], k[0][2])
-    ax.plot(x, y1)
-    y2 = f(x, k[1][0], k[1][1], k[1][2])
-    ax.plot(x, y2)
-    y3 = f(x, k[2][0], k[2][1], k[2][2])
-    ax.plot(x, y3)
+    
+    i = 0
+    while i < n:
+        y = f(x, k[i][0], k[i][1], k[i][2])
+        ax.plot(x, y)
+        i += 1 
+
+    #y1 = f(x, k[0][0], k[0][1], k[0][2])
+    #ax.plot(x, y1)
+    #y2 = f(x, k[1][0], k[1][1], k[1][2])
+    #ax.plot(x, y2)
+    #y3 = f(x, k[2][0], k[2][1], k[2][2])
+    #ax.plot(x, y3)
+    
+    # Marcamos el optimo
+    ax.plot([solucion[1]], [solucion[2]], marker='o', markersize=3, color="red")
+    # Titulo de la gráfica
     s = "{0} | Z = {1} | x1 = {2} | x2 = {3}".format(solucion[3], solucion[0], solucion[1], solucion[2])
     ax.set_title(s)
 
-    # Definiciones para el texto
-    # tex.axis("off")
-    # tex.text(x = 0, y = 0, s = "El tipo de resultado es: {0}. \n Z = {1} | x1 = {2} | x2 = {3}".format(solucion[3], solucion[0], solucion[1], solucion[2]))
     # Definiciones para la tabla
     columns = ("x1", "x2", "x3", "x4", "x5", "z")
     rows = ["A", "B", "C"]

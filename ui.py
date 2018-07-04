@@ -12,9 +12,6 @@ from calculo import *
 from tkinter import messagebox
 from grafico import *
 
-
-
-
 def ecuacion(): # X = X1  Y = X2
 #Tenemos que convertir todos los datos a INT para poder trabajar
 #los campos son leidos en forma de stringvar
@@ -33,7 +30,6 @@ def ecuacion(): # X = X1  Y = X2
 	R1S = float
 	R2S = float
 	R3S = float
-	
 
 	if (OPT == 'MAX'):
 		Optimo = LpMaximize
@@ -71,9 +67,9 @@ def ecuacion(): # X = X1  Y = X2
 	R3C3 = float(R3C.get())
 		
 	if  (R3Signo.get() =='>='):
-  		 R3S = -1
+  		 R3S = 1
 	elif (R3Signo.get() =='<='):
-  		  R3S = 1 
+  		  R3S = -1 
 	else:
 		R3S = 0
 	
@@ -86,13 +82,7 @@ def ecuacion(): # X = X1  Y = X2
 	#restricciones = [[2,1,18,-1],[2,3,42,-1],[3,1,24,-1]]	
 	
 	#problema = resolver(coeficienteObjetivo,restricciones,LpMaximize)
-	problema = resolver(FunObj,Rest,Optimo)
-	
-	
-	
-	
-	
-	
+	problema = resolver(FunObj,Rest,Optimo)	
 	
 	#imprimimos por consola los valores de la funcion objetivo y de las variables
 	'''
@@ -103,8 +93,8 @@ def ecuacion(): # X = X1  Y = X2
 	for v in problema.variables():
 		valores.append([(v.name),(v.varValue)])
 		print([v.name,v.varValue])
-	'''
-	
+	''' 
+
 	
 	# acá está ventana
 	
@@ -121,24 +111,13 @@ def ecuacion(): # X = X1  Y = X2
 
 	# Gráfica del problema
 	graficar(Rest, problema)
-	
-
-
-
-	
-
-
- 
-  
- 
-
 
 # Define la ventana principal de la aplicación
 
 raiz = Tk()
-raiz.geometry('300x300') # anchura x altura
-raiz.configure(bg = 'beige')
-raiz.title('Programacion Lineal')
+raiz.geometry('400x300') # anchura x altura
+##raiz.configure(bg = 'beige')
+raiz.title('Programacion Lineal - Método Gráfico')
 
 
 #FuncionObjetivo
@@ -159,51 +138,50 @@ R2C = StringVar()
 R3C = StringVar()
 
 #Funcion Objetivo
-funcionObjetivo = Frame(raiz, width = '400', height = '100', bg ='beige' )
+funcionObjetivo = Frame(raiz, width = '400', height = '100' )
 funcionObjetivo.pack(side = TOP)
-Label(funcionObjetivo, text ="Funcion Objetivo", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+Label(funcionObjetivo, text ="Ingrese la funcion objetivo: ", pady = '5').pack(side = TOP)
 Label(funcionObjetivo, text = " Z =  ").pack(side = LEFT)
 Entry(funcionObjetivo, width = '5', textvariable = OX1).pack(side = LEFT)
-Label(funcionObjetivo, text = " X1 ").pack(side = LEFT)
+Label(funcionObjetivo, text = " X1 +").pack(side = LEFT)
 Entry(funcionObjetivo, width = '5', textvariable = OX2).pack(side = LEFT)
 Label(funcionObjetivo, text = " X2 ").pack(side = LEFT)
-combo = ttk.Combobox(funcionObjetivo, values = ('MAX','MIN'), width = '5',textvariable = OPT).pack(side = LEFT)
+combo = ttk.Combobox(funcionObjetivo, values = ('MAX','MIN'), width = '5',textvariable = OPT, state = 'readonly').pack(side = LEFT)
 
 #Restriccion1
-restriccion1 = Frame(raiz, width = '400', height = '100', bg ='beige' )
+restriccion1 = Frame(raiz, width = '400', height = '100' )
 restriccion1.pack(side = TOP)
-Label(restriccion1, text ="Restriccion 1", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+Label(restriccion1, text ="Ingrese las restricciones: ", pady = '5').pack(side = TOP)
 Entry(restriccion1, width = '5',textvariable = R1X1).pack(side = LEFT)
-Label(restriccion1, text = " X1 ").pack(side = LEFT)
+Label(restriccion1, text = " X1 +").pack(side = LEFT)
 Entry(restriccion1, width = '5',textvariable = R1X2).pack(side = LEFT)
 Label(restriccion1, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion1, values = ('>=','<=','='), width = '5',textvariable = R1Signo).pack(side = LEFT)
-Entry(restriccion1, width = '5', textvariable = R1C).pack(side = LEFT)
+ttk.Combobox(restriccion1, values = ('>=','<=','='), width = '5',textvariable = R1Signo, state = 'readonly').pack(side = LEFT)
+Entry(restriccion1, width = '5', textvariable = R1C).pack(side = LEFT, padx=(5,0))
 
 #Restriccion2
-restriccion2 = Frame(raiz, width = '400', height = '100', bg ='beige' )
+restriccion2 = Frame(raiz, width = '400', height = '100')
 restriccion2.pack(side = TOP)
-Label(restriccion2, text ="Restriccion 2", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+#Label(restriccion2, text ="Restriccion 2", pady = '5', font=('12')).pack(side = TOP)
 Entry(restriccion2, width = '5',textvariable = R2X1).pack(side = LEFT)
-Label(restriccion2, text = " X1 ").pack(side = LEFT)
+Label(restriccion2, text = " X1 +").pack(side = LEFT)
 Entry(restriccion2, width = '5',textvariable = R2X2).pack(side = LEFT)
 Label(restriccion2, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R2Signo).pack(side = LEFT)
-Entry(restriccion2, width = '5', textvariable = R2C).pack(side = LEFT)
+ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R2Signo, state = 'readonly').pack(side = LEFT)
+Entry(restriccion2, width = '5', textvariable = R2C).pack(side = LEFT, padx=(5,0))
 
 #Restriccion3
-restriccion2 = Frame(raiz, width = '400', height = '100', bg ='beige' )
+restriccion2 = Frame(raiz, width = '400', height = '100')
 restriccion2.pack(side = TOP)
-Label(restriccion2, text ="Restriccion 3", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+#Label(restriccion2, text ="Restriccion 3", pady = '5', font=('12')).pack(side = TOP)
 Entry(restriccion2, width = '5',textvariable = R3X1).pack(side = LEFT)
-Label(restriccion2, text = " X1 ").pack(side = LEFT)
+Label(restriccion2, text = " X1 +").pack(side = LEFT)
 Entry(restriccion2, width = '5',textvariable = R3X2).pack(side = LEFT)
 Label(restriccion2, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R3Signo).pack(side = LEFT)
-Entry(restriccion2, width = '5', textvariable = R3C).pack(side = LEFT)
+ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R3Signo, state = 'readonly').pack(side = LEFT)
+Entry(restriccion2, width = '5', textvariable = R3C).pack(side = LEFT, padx=(5,0))
 
-ttk.Button(raiz, text='Salir', command=quit).pack(side=BOTTOM)
-ttk.Button(raiz, text='Optimizacion', command= ecuacion).pack(side = BOTTOM)
+ttk.Button(raiz, text='Resolver', command= ecuacion).pack(side = BOTTOM, pady=(10,10))
 
 
 # Después de definir la ventana principal y un widget botón
