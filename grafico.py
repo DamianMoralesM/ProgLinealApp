@@ -20,13 +20,6 @@ def graficar(k, solucion, n):
         else:
             ax.plot(x, y)
         i += 1 
-
-    #y1 = f(x, k[0][0], k[0][1], k[0][2])
-    #ax.plot(x, y1)
-    #y2 = f(x, k[1][0], k[1][1], k[1][2])
-    #ax.plot(x, y2)
-    #y3 = f(x, k[2][0], k[2][1], k[2][2])
-    #ax.plot(x, y3)
     
     # Marcamos el optimo
     ax.plot([solucion[1]], [solucion[2]], marker='o', markersize=3, color="red")
