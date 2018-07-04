@@ -9,8 +9,9 @@ def f(x, c1, c2, b):
 def graficar(k, solucion, n):
     fig, (ax, tabax) = pyplot.subplots(nrows=2)
     # Definiciones para la gráfica
-    x = np.arange(0.0, solucion[2], 0.01)
-    
+    x = np.arange(0.0, solucion[1], 0.01)
+    ax.set_ylim(0)
+    ax.axis('equal')
     i = 0
     while i < n:
         y = f(x, k[i][0], k[i][1], k[i][2])
