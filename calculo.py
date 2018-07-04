@@ -2,6 +2,9 @@
 # Import PuLP modeler functions
 from pulp import *
 
+obj = [3,2]
+k = [[2,1,18,-1],[2,3,42,-1],[3,1,24,-1]]	
+tipoProblema = LpMaximize
 
 def resolver(obj,k,tipoProblema):
     # A new LP problem
@@ -34,8 +37,10 @@ def resolver(obj,k,tipoProblema):
     # Write the problem as an LP file
     prob.writeLP("Calculus.lp")
 
+
     # Solve the problem using the default solver
     prob.solve()
+    print(prob.constraints.items)
     result = []
    
     result.append(prob.objective.value())
