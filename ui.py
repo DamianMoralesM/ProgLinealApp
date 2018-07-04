@@ -10,10 +10,7 @@ from tkinter import ttk  # Carga ttk (para widgets nuevos 8.5+)
 from pulp import * # Carga Pulp 
 from calculo import *
 from tkinter import messagebox
-
-
-
-
+from grafico import *
 
 def ecuacion(): # X = X1  Y = X2
 #Tenemos que convertir todos los datos a INT para poder trabajar
@@ -33,7 +30,6 @@ def ecuacion(): # X = X1  Y = X2
 	R1S = float
 	R2S = float
 	R3S = float
-	
 
 	if (OPT == 'MAX'):
 		Optimo = LpMaximize
@@ -43,14 +39,14 @@ def ecuacion(): # X = X1  Y = X2
 	FOX1 = float(OX1.get()) 
 	FOX2 = float(OX2.get())
 
-#Coeficientes Restriccion 1
+	#Coeficientes Restriccion 1
 	R1A1 = float(R1X1.get())
 	R1B1 = float(R1X2.get())
 	R1C1 = float(R1C.get())
 	if  (R3Signo.get() =='>='):
-  		 R1S = 1
+  		 R1S = -1
 	elif (R3Signo.get() =='<='):
-  		  R1S = -1 
+  		  R1S = 1 
 	else:
 		R1S = 0
 
@@ -59,9 +55,9 @@ def ecuacion(): # X = X1  Y = X2
 	R2B2 = float(R2X2.get())
 	R2C2 = float(R2C.get())
 	if  (R3Signo.get() =='>='):
-  		 R2S = 1
+  		 R2S = -1
 	elif (R3Signo.get() =='<='):
-  		  R2S = -1 
+  		  R2S = 1 
 	else:
 		R2S = 0
 
@@ -86,16 +82,20 @@ def ecuacion(): # X = X1  Y = X2
 	#restricciones = [[2,1,18,-1],[2,3,42,-1],[3,1,24,-1]]	
 	
 	#problema = resolver(coeficienteObjetivo,restricciones,LpMaximize)
-	problema = resolver(FunObj,Rest,Optimo)
-	
-	
-	
-	
-	
-	
+	problema = resolver(FunObj,Rest,Optimo)	
 	
 	#imprimimos por consola los valores de la funcion objetivo y de las variables
+	'''
+	print("objective=", problema[0])
+	print("x1=", problema[1])
+	print("x2=", problema[2])
+	
+	for v in problema.variables():
+		valores.append([(v.name),(v.varValue)])
+		print([v.name,v.varValue])
+	''' 
 
+	
 	# acá está ventana
 	
 	root = Tk()
@@ -107,25 +107,17 @@ def ecuacion(): # X = X1  Y = X2
 	Label(root, text = "El tipo resultado es = " + str(problema[3])).pack()
 	Label(root, text = "El Z optimo es = " + str(problema[0])).pack()
 	Label(root, text = "x1" + "= " + str(problema[1])).pack()
-	Label(root, text = "x2" + "= " + str(problema[2])).pack()
-	
+	Label(root, text = "x1" + "= " + str(problema[2])).pack()
 
-
-
-	
-
-
- 
-  
- 
-
+	# Gráfica del problema
+	graficar(Rest, problema)
 
 # Define la ventana principal de la aplicación
 
 raiz = Tk()
-raiz.geometry('300x300') # anchura x altura
-raiz.configure(bg = 'beige')
-raiz.title('Programacion Lineal')
+raiz.geometry('400x300') # anchura x altura
+##raiz.configure(bg = 'beige')
+raiz.title('Programacion Lineal - Método Gráfico')
 
 
 #FuncionObjetivo
@@ -146,51 +138,50 @@ R2C = StringVar()
 R3C = StringVar()
 
 #Funcion Objetivo
-funcionObjetivo = Frame(raiz, width = '400', height = '100', bg ='beige' )
+funcionObjetivo = Frame(raiz, width = '400', height = '100' )
 funcionObjetivo.pack(side = TOP)
-Label(funcionObjetivo, text ="Funcion Objetivo", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+Label(funcionObjetivo, text ="Ingrese la funcion objetivo: ", pady = '5').pack(side = TOP)
 Label(funcionObjetivo, text = " Z =  ").pack(side = LEFT)
 Entry(funcionObjetivo, width = '5', textvariable = OX1).pack(side = LEFT)
-Label(funcionObjetivo, text = " X1 ").pack(side = LEFT)
+Label(funcionObjetivo, text = " X1 +").pack(side = LEFT)
 Entry(funcionObjetivo, width = '5', textvariable = OX2).pack(side = LEFT)
 Label(funcionObjetivo, text = " X2 ").pack(side = LEFT)
-combo = ttk.Combobox(funcionObjetivo, values = ('MAX','MIN'), width = '5',textvariable = OPT).pack(side = LEFT)
+combo = ttk.Combobox(funcionObjetivo, values = ('MAX','MIN'), width = '5',textvariable = OPT, state = 'readonly').pack(side = LEFT)
 
 #Restriccion1
-restriccion1 = Frame(raiz, width = '400', height = '100', bg ='beige' )
+restriccion1 = Frame(raiz, width = '400', height = '100' )
 restriccion1.pack(side = TOP)
-Label(restriccion1, text ="Restriccion 1", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+Label(restriccion1, text ="Ingrese las restricciones: ", pady = '5').pack(side = TOP)
 Entry(restriccion1, width = '5',textvariable = R1X1).pack(side = LEFT)
-Label(restriccion1, text = " X1 ").pack(side = LEFT)
+Label(restriccion1, text = " X1 +").pack(side = LEFT)
 Entry(restriccion1, width = '5',textvariable = R1X2).pack(side = LEFT)
 Label(restriccion1, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion1, values = ('>=','<=','='), width = '5',textvariable = R1Signo).pack(side = LEFT)
-Entry(restriccion1, width = '5', textvariable = R1C).pack(side = LEFT)
+ttk.Combobox(restriccion1, values = ('>=','<=','='), width = '5',textvariable = R1Signo, state = 'readonly').pack(side = LEFT)
+Entry(restriccion1, width = '5', textvariable = R1C).pack(side = LEFT, padx=(5,0))
 
 #Restriccion2
-restriccion2 = Frame(raiz, width = '400', height = '100', bg ='beige' )
+restriccion2 = Frame(raiz, width = '400', height = '100')
 restriccion2.pack(side = TOP)
-Label(restriccion2, text ="Restriccion 2", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+#Label(restriccion2, text ="Restriccion 2", pady = '5', font=('12')).pack(side = TOP)
 Entry(restriccion2, width = '5',textvariable = R2X1).pack(side = LEFT)
-Label(restriccion2, text = " X1 ").pack(side = LEFT)
+Label(restriccion2, text = " X1 +").pack(side = LEFT)
 Entry(restriccion2, width = '5',textvariable = R2X2).pack(side = LEFT)
 Label(restriccion2, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R2Signo).pack(side = LEFT)
-Entry(restriccion2, width = '5', textvariable = R2C).pack(side = LEFT)
+ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R2Signo, state = 'readonly').pack(side = LEFT)
+Entry(restriccion2, width = '5', textvariable = R2C).pack(side = LEFT, padx=(5,0))
 
 #Restriccion3
-restriccion2 = Frame(raiz, width = '400', height = '100', bg ='beige' )
+restriccion2 = Frame(raiz, width = '400', height = '100')
 restriccion2.pack(side = TOP)
-Label(restriccion2, text ="Restriccion 3", pady = '5', bg ='beige', font=('12')).pack(side = TOP)
+#Label(restriccion2, text ="Restriccion 3", pady = '5', font=('12')).pack(side = TOP)
 Entry(restriccion2, width = '5',textvariable = R3X1).pack(side = LEFT)
-Label(restriccion2, text = " X1 ").pack(side = LEFT)
+Label(restriccion2, text = " X1 +").pack(side = LEFT)
 Entry(restriccion2, width = '5',textvariable = R3X2).pack(side = LEFT)
 Label(restriccion2, text = " X2 ").pack(side = LEFT)
-ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R3Signo).pack(side = LEFT)
-Entry(restriccion2, width = '5', textvariable = R3C).pack(side = LEFT)
+ttk.Combobox(restriccion2, values = ('>=','<=','='), width = '5', textvariable = R3Signo, state = 'readonly').pack(side = LEFT)
+Entry(restriccion2, width = '5', textvariable = R3C).pack(side = LEFT, padx=(5,0))
 
-ttk.Button(raiz, text='Salir', command=quit).pack(side=BOTTOM)
-ttk.Button(raiz, text='Optimizacion', command= ecuacion).pack(side = BOTTOM)
+ttk.Button(raiz, text='Resolver', command= ecuacion).pack(side = BOTTOM, pady=(10,10))
 
 
 # Después de definir la ventana principal y un widget botón
