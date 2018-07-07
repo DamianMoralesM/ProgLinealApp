@@ -57,6 +57,8 @@ def puntosTabla(obj, k, n):
             b = rest[j][2]
             signo = rest[j][3] * (-1)
             s = (b - c1 * x1 - c2 * x2) * signo
+            if signo == 0:
+                s = "-"
             data[i].append(s)
             j += 1
         i += 1
@@ -92,8 +94,9 @@ def limpiarTabla(tabla):
     while i < len(tabla):
         j = 0
         while j < len(tabla[i]):
-            if tabla[i][j] < 0:
-                arr.append(tabla[i])
+            if tabla[i][j] != "-":
+                if tabla[i][j] < 0:
+                    arr.append(tabla[i])
             j += 1
         i += 1
     i = 0
@@ -106,7 +109,8 @@ def redondearValores(tabla):
     while i < len(tabla):
         j = 0
         while j < len(tabla[i]):
-            tabla[i][j] = round(tabla[i][j], 2)
+            if tabla[i][j] != "-":
+                tabla[i][j] = round(tabla[i][j], 2)
             j += 1
         i += 1
     
@@ -179,7 +183,7 @@ def graficar(obj, k, solucion, n):
     # Configuración de la gráfica
     ax.autoscale(enable = True, axis = 'y', tight = True)
     ax.set_title(s)
-    ax.set_ylim(ymin = 0)
+    ax.set_ylim(ymin = -1)
     
     # Mostrar el gráfico completo
     pyplot.tight_layout()
