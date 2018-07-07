@@ -76,24 +76,47 @@ def puntosTabla(obj, k, n):
     print(data)
     return data
 
+def limpiarTabla(tabla):
+    i = 0
+    arr = []
+    while i < len(tabla):
+        j = 0
+        while j < len(tabla[i]):
+            if tabla[i][j] < 0:
+                arr.append(tabla[i])
+            j += 1
+        i += 1
+    i = 0
+    while i < len(arr):
+        tabla.remove(arr[i])
+        i += 1
+
+def puntosFactibles(tabla, ax):
+    i = 0
+    while i < len(tabla):
+        ax.plot([tabla[i][0]], [tabla[i][1]], marker='o', markersize=7, color="blue")
+        i += 1
+def pintarConvexo(tabla, ax):
+    arrx = []
+    arry = []
+    i = 0
+    while i < len(tabla):
+        arrx.append(tabla[i][0])
+        arry.append(tabla[i][1])
+        i += 1
+    print('Los puntos del convexo:')
+    print(arrx)
+    print(arry)
+    ax.fill_between(x = arrx, y1 = arry, color = 'pink', alpha = '0.6')
+
 def graficar(obj, k, solucion, n):
     fig, (ax, tabax) = pyplot.subplots(nrows=2)
 
     # Definiciones para la tabla
     data = puntosTabla(obj, k, n)
-    columns = ("x1", "x2", "x3", "x4", "x5", "z")
-    rows = []
-    char = ord('A')
-    i = 0
-    while i < len(data):
-        rows.append(chr(char))
-        char += 1
-        i += 1
-    tabax.axis("off")
-    tabax.table(cellText=data, rowLabels=rows, colLabels=columns, loc="center") #, bbox=[0.0,-0.5,1,0.3])
 
     # Definiciones para la gráfica
-    # Obtenemos el punto optimo con valor mayor de X
+        # Obtenemos el punto de los datos con valor mayor de X
     i = 0
     arr = []
     while i < len(data):
@@ -102,9 +125,28 @@ def graficar(obj, k, solucion, n):
     xmax = max(arr)
     xmax = xmax + 0.4 * xmax
     x = np.arange(0, xmax, 0.01)
-    # ax.set_ylim(0)
-    # ax.axis('equal')
+    
+    # Limpiamos la tabla
+    limpiarTabla(data)
+    
+    # Dibujamos la tabla
+    columns = ["x1", "x2"]
+    i = 1 
+    while i < (n + 1):
+        columns.append("x" + str(i + 2))
+        i += 1
+    columns.append("z")
+    rows = []
+    char = ord('A')
+    i = 0
+    while i < len(data):
+        rows.append(chr(char))
+        char += 1
+        i += 1
+    tabax.axis("off")
+    tabax.table(cellText=data, rowLabels=rows, colLabels=columns, loc="center")
     ax.autoscale(enable = True, axis = 'y', tight = True)
+    # Dibujamos la gráfica
     i = 0
     while i < n:
         y = f(x, k[i][0], k[i][1], k[i][2])
@@ -116,10 +158,15 @@ def graficar(obj, k, solucion, n):
     # Dibujamos los ejes
     ax.axvline(x = 0, color = 'k')
     ax.axhline(y = 0, color = 'k')
+    # Marcamos puntos factibles
+    puntosFactibles(data, ax)    
     # Marcamos el optimo
-    ax.plot([solucion[1]], [solucion[2]], marker='o', markersize=3, color="red")
+    ax.plot([solucion[1]], [solucion[2]], marker='o', markersize=10, color="red")
+    # Marcamos la region factible
+    # pintarConvexo(data, ax)
     # Titulo de la gráfica
     s = "{0} | Z = {1} | x1 = {2} | x2 = {3}".format(solucion[3], solucion[0], solucion[1], solucion[2])
     ax.set_title(s)
+    ax.set_ylim(ymin = 0)
     pyplot.tight_layout()
     pyplot.show()
