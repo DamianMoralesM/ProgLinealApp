@@ -1,21 +1,20 @@
-
-# Import PuLP modeler functions
+# Importar módulo pulp
 from pulp import *
 
 
 def resolver(obj,k,tipoProblema, n):
-    # A new LP problem
+    # Definimos el PL
     prob = LpProblem("yourProblem", tipoProblema)
-    # variables
-
+    
+    # Variables de decisión
     x1=LpVariable("x1",0,None)
     x2=LpVariable("x2",0,None)
 
 
-    #objetive
+    # Definimos la función objetivo
     prob += obj[0]*x1 + obj[1]*x2, "Funcion Objetivo"
 
-    # constraints
+    # Definimos las restricciones
     i = 0
     while i < n:
         constraint = LpAffineExpression([ (x1,k[i][0]), (x2,k[i][1])])
@@ -23,34 +22,19 @@ def resolver(obj,k,tipoProblema, n):
         prob += a 
         i += 1
 
-    #constrain1 = LpAffineExpression([ (x1,k[0][0]), (x2,k[0][1])])
-    #constrain2 = LpAffineExpression([ (x1,k[1][0]), (x2,k[1][1])])
-    #constrain3 = LpAffineExpression([ (x1,k[2][0]), (x2,k[2][1])])
-
-    #a = LpConstraint(e=constrain1, sense= k[0][3], name="c1", rhs= k[0][2]) 
-    #b = LpConstraint(e=constrain2, sense= k[1][3], name="c2", rhs= k[1][2])
-    #c = LpConstraint(e=constrain3, sense= k[2][3], name="c3", rhs= k[2][2])
-
-    #adding constrains to the problem
-    #prob += a
-    #prob += b
-    #prob += c
-
-
-    # Write the problem as an LP file
-    # prob.writeLP("Calculus.lp")
+    # Imprimir el problema
     print(prob)
-    # Solve the problem using the default solver
+
+    # Resolver el problema
     prob.solve()
     result = []
    
+   # Colocar el valor de las variables de decisión
     result.append(prob.objective.value())
     for v in prob.variables():
          result.append(v.varValue)
-    
+
+    # Para conocer la factibilidad del problema
     result.append(LpStatus[prob.status])
-
     return result
-
-
   

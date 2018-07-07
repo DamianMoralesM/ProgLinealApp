@@ -76,6 +76,16 @@ def puntosTabla(obj, k, n):
     print(data)
     return data
 
+def valorMayorX(data):
+    i = 0
+    arr = []
+    while i < len(data):
+        arr.append(data[i][0])
+        i += 1
+    xmax = max(arr)
+    xmax = xmax + 0.4 * xmax
+    return xmax
+
 def limpiarTabla(tabla):
     i = 0
     arr = []
@@ -91,45 +101,16 @@ def limpiarTabla(tabla):
         tabla.remove(arr[i])
         i += 1
 
-def puntosFactibles(tabla, ax):
+def redondearValores(tabla):
     i = 0
     while i < len(tabla):
-        ax.plot([tabla[i][0]], [tabla[i][1]], marker='o', markersize=7, color="blue")
+        j = 0
+        while j < len(tabla[i]):
+            tabla[i][j] = round(tabla[i][j], 2)
+            j += 1
         i += 1
-def pintarConvexo(tabla, ax):
-    arrx = []
-    arry = []
-    i = 0
-    while i < len(tabla):
-        arrx.append(tabla[i][0])
-        arry.append(tabla[i][1])
-        i += 1
-    print('Los puntos del convexo:')
-    print(arrx)
-    print(arry)
-    ax.fill_between(x = arrx, y1 = arry, color = 'pink', alpha = '0.6')
-
-def graficar(obj, k, solucion, n):
-    fig, (ax, tabax) = pyplot.subplots(nrows=2)
-
-    # Definiciones para la tabla
-    data = puntosTabla(obj, k, n)
-
-    # Definiciones para la gráfica
-        # Obtenemos el punto de los datos con valor mayor de X
-    i = 0
-    arr = []
-    while i < len(data):
-        arr.append(data[i][0])
-        i += 1
-    xmax = max(arr)
-    xmax = xmax + 0.4 * xmax
-    x = np.arange(0, xmax, 0.01)
     
-    # Limpiamos la tabla
-    limpiarTabla(data)
-    
-    # Dibujamos la tabla
+def dibujarTabla(data, n, tabax):
     columns = ["x1", "x2"]
     i = 1 
     while i < (n + 1):
@@ -144,8 +125,34 @@ def graficar(obj, k, solucion, n):
         char += 1
         i += 1
     tabax.axis("off")
+    # Redondear los valores de la tabla antes de mostrarlos
+    redondearValores(data)
     tabax.table(cellText=data, rowLabels=rows, colLabels=columns, loc="center")
-    ax.autoscale(enable = True, axis = 'y', tight = True)
+
+def puntosFactibles(tabla, ax):
+    i = 0
+    while i < len(tabla):
+        ax.plot([tabla[i][0]], [tabla[i][1]], marker='o', markersize=7, color="blue")
+        i += 1
+
+def graficar(obj, k, solucion, n):
+    fig, (ax, tabax) = pyplot.subplots(nrows=2)
+
+    # Definiciones para la tabla
+    data = puntosTabla(obj, k, n)
+
+    # Definiciones para la gráfica
+    # Obtenemos el punto de los datos con valor mayor de X
+
+    xmax = valorMayorX(data)
+    x = np.arange(0, xmax, 0.01)
+
+    # Limpiamos la tabla
+    limpiarTabla(data)
+    
+    # Dibujamos la tabla
+    dibujarTabla(data, n, tabax)
+    
     # Dibujamos la gráfica
     i = 0
     while i < n:
@@ -155,18 +162,25 @@ def graficar(obj, k, solucion, n):
         else:
             ax.plot(x, y)
         i += 1 
+    
     # Dibujamos los ejes
     ax.axvline(x = 0, color = 'k')
     ax.axhline(y = 0, color = 'k')
+    
     # Marcamos puntos factibles
     puntosFactibles(data, ax)    
+    
     # Marcamos el optimo
     ax.plot([solucion[1]], [solucion[2]], marker='o', markersize=10, color="red")
-    # Marcamos la region factible
-    # pintarConvexo(data, ax)
+    
     # Titulo de la gráfica
     s = "{0} | Z = {1} | x1 = {2} | x2 = {3}".format(solucion[3], solucion[0], solucion[1], solucion[2])
+    
+    # Configuración de la gráfica
+    ax.autoscale(enable = True, axis = 'y', tight = True)
     ax.set_title(s)
     ax.set_ylim(ymin = 0)
+    
+    # Mostrar el gráfico completo
     pyplot.tight_layout()
     pyplot.show()
