@@ -101,7 +101,10 @@ def limpiarTabla(tabla):
         i += 1
     i = 0
     while i < len(arr):
-        tabla.remove(arr[i])
+        try:
+            tabla.remove(arr[i])
+        except:
+            print("elemento no está en la lista: "+ str(arr[i]))
         i += 1
 
 def redondearValores(tabla):
