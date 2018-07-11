@@ -24,24 +24,16 @@ def puntosTabla(obj, k, n):
             b2 = rest[j][2]
             A = np.array([[c11, c12], [c21, c22]])
             B = np.array([[b1], [b2]])
-            print('Matriz A')
-            print(A)
-            print('Matriz B')
-            print(B)
             # X = [[x1], [x2]]
             try:
                 X = np.linalg.inv(A).dot(B)
-                print('Resultado')
                 arr = [X[0][0], X[1][0]]
-                print(arr)
                 if not (arr in data):
                     data.append(arr)
             except:
-                print("Restricciones {0} y {1} incompatibles".format(i, j))
+                pass
             j += 1
         i += 1
-    print('Los puntos son')
-    print(data)
     # Luego se tienen que obtener los valores de slacks por cada punto
     i = 0
     rest.pop()
@@ -62,8 +54,7 @@ def puntosTabla(obj, k, n):
             data[i].append(s)
             j += 1
         i += 1
-    print('Agregando slacks')
-    print(data)
+    
     # Ahora agregamos el valor de Z en cada punto
     i = 0
     while i < len(data):
@@ -74,8 +65,6 @@ def puntosTabla(obj, k, n):
         z = (c1 * x1) + (c2 * x2)
         data[i].append(z)
         i += 1
-    print('La tabla final')
-    print(data)
     return data
 
 def valorMayorX(data):
@@ -104,7 +93,7 @@ def limpiarTabla(tabla):
         try:
             tabla.remove(arr[i])
         except:
-            print("elemento no está en la lista: "+ str(arr[i]))
+            pass
         i += 1
 
 def redondearValores(tabla):

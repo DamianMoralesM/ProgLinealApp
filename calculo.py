@@ -22,9 +22,6 @@ def resolver(obj,k,tipoProblema, n):
         prob += a 
         i += 1
 
-    # Imprimir el problema
-    print(prob)
-
     # Resolver el problema
     prob.solve()
     result = []
