@@ -95,7 +95,7 @@ def limpiarTabla(tabla):
         j = 0
         while j < len(tabla[i]):
             if tabla[i][j] != "-":
-                if tabla[i][j] < 0:
+                if round(tabla[i][j], 5) < 0:
                     arr.append(tabla[i])
             j += 1
         i += 1
@@ -113,7 +113,7 @@ def redondearValores(tabla):
         j = 0
         while j < len(tabla[i]):
             if tabla[i][j] != "-":
-                tabla[i][j] = round(tabla[i][j], 2)
+                tabla[i][j] = abs(round(tabla[i][j], 2))
             j += 1
         i += 1
     
